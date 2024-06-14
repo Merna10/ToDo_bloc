@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'task.g.dart'; // Generated file
 
 @HiveType(typeId: 0)
-class Task {
+class Task extends HiveObject {
   @HiveField(0)
   String id;
 
@@ -22,9 +22,6 @@ class Task {
     required this.deadline,
     required this.isCompleted,
   });
-}
-
-extension TaskExtension on Task {
   Task copyWith({
     String? id,
     String? title,

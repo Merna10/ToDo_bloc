@@ -5,6 +5,8 @@ import 'package:todo/presentation/screen/add_task_screen.dart';
 import '../widgets/task_item.dart';
 
 class TaskListScreen extends StatelessWidget {
+  const TaskListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final taskCubit = context.read<TaskCubit>();
@@ -27,8 +29,7 @@ class TaskListScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is TaskLoaded) {
             final tasks = state.tasks;
-            final completedTasks =
-                tasks.where((task) => task.isCompleted).toList();
+            final completedTasks = tasks.where((task) => task.isCompleted).toList();
             AssetImage imageToShow = completedTasks.length == tasks.length
                 ? const AssetImage('assets/images/finish.jpg')
                 : completedTasks.isNotEmpty
@@ -46,30 +47,26 @@ class TaskListScreen extends StatelessWidget {
                     ),
                   ),
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Completed Tasks: ${completedTasks.length} / ${tasks.length}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 22,
-                              backgroundColor:
-                                  Color.fromARGB(109, 192, 189, 180)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Completed Tasks: ${completedTasks.length} / ${tasks.length}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 22,
+                          backgroundColor: Color.fromARGB(109, 192, 189, 180),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 Expanded(
                   child: tasks.isEmpty
-                      ? Center(child: Text('No tasks available'))
+                      ? const Center(child: Text('No tasks available'))
                       : ListView.builder(
                           itemCount: tasks.length,
                           itemBuilder: (context, index) {
@@ -81,7 +78,7 @@ class TaskListScreen extends StatelessWidget {
               ],
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

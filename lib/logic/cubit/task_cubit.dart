@@ -21,23 +21,19 @@ class TaskCubit extends Cubit<TaskState> {
   }
 
   void updateTask(Task task) {
-    task.isCompleted = !task.isCompleted; // Toggle the completion status
     _taskService.updateTask(task);
     fetchTasks();
   }
 
   void deleteTask(String id) {
     print('Deleting task with ID: $id');
-    _taskService.deleteTask(id); // Delete the task from storage
-    final updatedTasks = _taskService.getTasks(); // Fetch the updated task list
+    final deleted = _taskService.deleteTask(id);
 
-    // Update the state only if the task was successfully deleted
-    final isDeleted = updatedTasks.where((task) => task.id == id).isEmpty;
-    if (isDeleted) {
-      emit(TaskLoaded(updatedTasks)); // Emit a new state with the updated list
+    if (deleted) {
+      print('Task deleted successfully.');
+      fetchTasks(); // Update tasks after deletion
     } else {
-      print(
-          'Failed to delete task with ID: $id'); // Print an error message if deletion failed
+      print('Failed to delete task with ID: $id');
     }
   }
 }

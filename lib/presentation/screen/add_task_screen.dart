@@ -3,19 +3,19 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/logic/cubit/task_cubit.dart';
 import 'package:uuid/uuid.dart';
-import '../providers/task_provider.dart';
 import '../../data/models/task.dart';
 
 class AddTaskScreen extends StatelessWidget {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _deadlineController = TextEditingController();
 
+  AddTaskScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Task'),
-        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
