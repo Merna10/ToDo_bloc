@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/logic/cubit/task_cubit.dart';
@@ -11,14 +12,15 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedDeadline = DateFormat('yyyy-MM-dd HH:mm').format(task.deadline);
+    final formattedDeadline =
+        DateFormat('yyyy-MM-dd HH:mm').format(task.deadline);
 
     Color itemColor = Colors.white; // Default color
 
     if (task.deadline.isBefore(DateTime.now()) && !task.isCompleted) {
-      itemColor = Colors.red; // Deadline is over and task is not completed, set color to red
+      itemColor = Colors.red;
     } else if (task.isCompleted) {
-      itemColor = Colors.green; // Task is completed, set color to green
+      itemColor = Colors.green;
     }
 
     return Dismissible(
@@ -57,16 +59,32 @@ class TaskItem extends StatelessWidget {
         );
       },
       child: Card(
-        color: itemColor, // Set the color of the card based on itemColor
+        color: itemColor,
         child: ListTile(
-          title: Text(task.title),
-          subtitle: Text(formattedDeadline),
+          title: Text(
+            task.title,
+            style: GoogleFonts.acme(
+              textStyle: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          ),
+          subtitle: Text(
+            formattedDeadline,
+            style: GoogleFonts.acme(
+              textStyle: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          ),
           trailing: Checkbox(
             value: task.isCompleted,
             onChanged: (newValue) {
-              // Update the task state in Hive
               Task updatedTask = task.copyWith(isCompleted: newValue);
-              Provider.of<TaskCubit>(context, listen: false).updateTask(updatedTask);
+              Provider.of<TaskCubit>(context, listen: false)
+                  .updateTask(updatedTask);
             },
           ),
         ),
